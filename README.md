@@ -41,3 +41,27 @@ in System Settings > Privacy & Security > Accessibility, then try again.
 - **Schedule** — optionally restrict Continuous/Zen jiggling to specific
   days and an hour range (e.g. weekdays 9-17). Disabled by default, meaning
   jiggling is allowed at any time. "Jiggle Now" always ignores the schedule.
+
+## Building a signed .app (with icon)
+
+`swift run` is fine for development, but it doesn't produce a real icon or a
+double-clickable app. To build one:
+
+    ./Scripts/build-app.sh
+
+This builds a release binary, assembles `Jiggler.app`, compiles
+`Resources/AppIcon.iconset/` into `AppIcon.icns`, writes an `Info.plist`, and
+ad-hoc signs the bundle (`codesign --sign -`). The result, `Jiggler.app` in
+the repo root, runs and shows its icon in Finder/Dock/Activity Monitor on
+this Mac.
+
+Ad-hoc signing has no Apple Developer account requirement, but it's only
+trusted on the Mac that built it — copying `Jiggler.app` to another Mac will
+trigger Gatekeeper's "unidentified developer" warning. Avoiding that on other
+Macs requires a paid Apple Developer ID certificate plus notarizing the app
+with Apple, which isn't set up here.
+
+To change the icon artwork, edit and rerun `python Scripts/generate_icon.py`
+(requires Pillow: `pip install pillow`) to regenerate
+`Resources/AppIcon.iconset/`, then rerun `./Scripts/build-app.sh`. Or replace
+the iconset with your own PNGs at the same filenames/sizes.
