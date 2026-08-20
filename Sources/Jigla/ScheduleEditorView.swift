@@ -1,7 +1,10 @@
 import SwiftUI
+import AppKit
 
 struct ScheduleEditorView: View {
     @Binding var schedule: ScheduleConfig
+
+    private let orderedDays = Weekday.ordered(firstWeekday: Calendar.current.firstWeekday)
 
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
@@ -9,12 +12,10 @@ struct ScheduleEditorView: View {
 
             if schedule.isEnabled {
                 HStack(spacing: 6) {
-                    ForEach(Weekday.allCases) { day in
-                        DayToggleChip(
-                            day: day,
-                            isSelected: schedule.activeDays.contains(day),
-                            toggle: { toggleDay(day) }
-                        )
+                    ForEach(orderedDays) { day in
+                        Toggle(day.singleLetterLabel, isOn: binding(for: day))
+                            .toggleStyle(DayChipToggleStyle())
+                            .accessibilityLabel(day.fullName)
                     }
                 }
 
@@ -32,32 +33,44 @@ struct ScheduleEditorView: View {
         }
     }
 
-    private func toggleDay(_ day: Weekday) {
-        if schedule.activeDays.contains(day) {
-            schedule.activeDays.remove(day)
-        } else {
-            schedule.activeDays.insert(day)
-        }
+    private func binding(for day: Weekday) -> Binding<Bool> {
+        Binding(
+            get: { schedule.activeDays.contains(day) },
+            set: { isOn in
+                if isOn {
+                    schedule.activeDays.insert(day)
+                } else {
+                    schedule.activeDays.remove(day)
+                }
+            }
+        )
     }
 }
 
-private struct DayToggleChip: View {
-    let day: Weekday
-    let isSelected: Bool
-    let toggle: () -> Void
-
-    var body: some View {
-        Button(action: toggle) {
-            Text(day.singleLetterLabel)
+private struct DayChipToggleStyle: ToggleStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        Button {
+            configuration.isOn.toggle()
+        } label: {
+            configuration.label
                 .font(.system(size: 12, weight: .semibold))
+                .lineLimit(1)
+                .minimumScaleFactor(0.5)
                 .frame(width: 26, height: 26)
                 .background(
-                    Circle().fill(isSelected ? Color.accentColor : Color.secondary.opacity(0.15))
+                    Circle().fill(configuration.isOn ? Color.accentColor : Color.secondary.opacity(0.15))
                 )
-                .foregroundColor(isSelected ? .white : .primary)
+                .foregroundColor(configuration.isOn ? Self.selectedTextColor : .primary)
         }
         .buttonStyle(.plain)
-        .accessibilityLabel(day.fullName)
-        .accessibilityAddTraits(isSelected ? [.isSelected] : [])
+    }
+
+    // White text is unreadable on light accent colors (Yellow, Graphite in
+    // light mode), so pick black/white by the accent's luminance the way
+    // macOS does for its own accent-tinted selections.
+    private static var selectedTextColor: Color {
+        guard let accent = NSColor.controlAccentColor.usingColorSpace(.sRGB) else { return .white }
+        let luminance = 0.299 * accent.redComponent + 0.587 * accent.greenComponent + 0.114 * accent.blueComponent
+        return luminance > 0.65 ? .black : .white
     }
 }

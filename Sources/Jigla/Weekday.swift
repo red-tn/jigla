@@ -11,39 +11,19 @@ enum Weekday: Int, CaseIterable, Codable, Identifiable {
 
     var id: Int { rawValue }
 
-    var shortLabel: String {
-        switch self {
-        case .sunday: return "Sun"
-        case .monday: return "Mon"
-        case .tuesday: return "Tue"
-        case .wednesday: return "Wed"
-        case .thursday: return "Thu"
-        case .friday: return "Fri"
-        case .saturday: return "Sat"
-        }
-    }
-
+    // Calendar's weekdaySymbols arrays are 0-indexed Sunday-first, matching
+    // rawValue - 1, and come localized for free.
     var singleLetterLabel: String {
-        switch self {
-        case .sunday: return "S"
-        case .monday: return "M"
-        case .tuesday: return "T"
-        case .wednesday: return "W"
-        case .thursday: return "T"
-        case .friday: return "F"
-        case .saturday: return "S"
-        }
+        Calendar.current.veryShortWeekdaySymbols[rawValue - 1]
     }
 
     var fullName: String {
-        switch self {
-        case .sunday: return "Sunday"
-        case .monday: return "Monday"
-        case .tuesday: return "Tuesday"
-        case .wednesday: return "Wednesday"
-        case .thursday: return "Thursday"
-        case .friday: return "Friday"
-        case .saturday: return "Saturday"
-        }
+        Calendar.current.weekdaySymbols[rawValue - 1]
+    }
+
+    /// All seven days ordered for display, starting from the given
+    /// `Calendar.firstWeekday` value (1 = Sunday ... 7 = Saturday).
+    static func ordered(firstWeekday: Int) -> [Weekday] {
+        (0..<7).compactMap { Weekday(rawValue: (firstWeekday - 1 + $0) % 7 + 1) }
     }
 }
