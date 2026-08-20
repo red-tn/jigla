@@ -2,17 +2,17 @@
 import PackageDescription
 
 let package = Package(
-    name: "Jiggler",
+    name: "Jigla",
     platforms: [.macOS(.v13)],
     targets: [
         .executableTarget(
-            name: "Jiggler",
-            path: "Sources/Jiggler"
+            name: "Jigla",
+            path: "Sources/Jigla"
         ),
         .testTarget(
-            name: "JigglerTests",
-            dependencies: ["Jiggler"],
-            path: "Tests/JigglerTests"
+            name: "JiglaTests",
+            dependencies: ["Jigla"],
+            path: "Tests/JiglaTests"
         )
     ]
 )

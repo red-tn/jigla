@@ -1,5 +1,5 @@
 #!/bin/bash
-# Builds Jiggler.app: a proper macOS app bundle with an icon, ad-hoc signed.
+# Builds Jigla.app: a proper macOS app bundle with an icon, ad-hoc signed.
 #
 # Must be run on macOS (uses iconutil and codesign, which don't exist
 # elsewhere). Run from the repo root:
@@ -8,8 +8,8 @@
 #
 set -euo pipefail
 
-BUNDLE_ID="com.jiggler.app"
-APP_NAME="Jiggler"
+BUNDLE_ID="com.jigla.app"
+APP_NAME="Jigla"
 VERSION="1.0.0"
 
 REPO_ROOT="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"

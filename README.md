@@ -1,4 +1,4 @@
-# Jiggler
+# Jigla
 
 A lightweight macOS menu bar app that keeps your Mac awake by periodically
 nudging the mouse cursor.
@@ -23,7 +23,7 @@ Xcode reads `Package.swift` directly) and press Run.
 ## First launch
 
 The first time you switch to Continuous or Zen mode (or hit "Jiggle Now"),
-macOS needs Accessibility permission to let Jiggler move the cursor. Grant it
+macOS needs Accessibility permission to let Jigla move the cursor. Grant it
 in System Settings > Privacy & Security > Accessibility, then try again.
 
 ## Modes
@@ -49,14 +49,14 @@ double-clickable app. To build one:
 
     ./Scripts/build-app.sh
 
-This builds a release binary, assembles `Jiggler.app`, compiles
+This builds a release binary, assembles `Jigla.app`, compiles
 `Resources/AppIcon.iconset/` into `AppIcon.icns`, writes an `Info.plist`, and
-ad-hoc signs the bundle (`codesign --sign -`). The result, `Jiggler.app` in
+ad-hoc signs the bundle (`codesign --sign -`). The result, `Jigla.app` in
 the repo root, runs and shows its icon in Finder/Dock/Activity Monitor on
 this Mac.
 
 Ad-hoc signing has no Apple Developer account requirement, but it's only
-trusted on the Mac that built it — copying `Jiggler.app` to another Mac will
+trusted on the Mac that built it — copying `Jigla.app` to another Mac will
 trigger Gatekeeper's "unidentified developer" warning. Avoiding that on other
 Macs requires a paid Apple Developer ID certificate plus notarizing the app
 with Apple, which isn't set up here.

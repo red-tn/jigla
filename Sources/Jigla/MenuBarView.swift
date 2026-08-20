@@ -67,7 +67,7 @@ struct MenuBarView: View {
 
             Divider()
 
-            Button("Quit Jiggler") {
+            Button("Quit Jigla") {
                 NSApplication.shared.terminate(nil)
             }
         }
@@ -77,7 +77,7 @@ struct MenuBarView: View {
             Button("Open System Settings") { AccessibilityPermission.openSystemSettings() }
             Button("Cancel", role: .cancel) {}
         } message: {
-            Text("Jiggler needs Accessibility permission to move the cursor. Grant access in System Settings, then try again.")
+            Text("Jigla needs Accessibility permission to move the cursor. Grant access in System Settings, then try again.")
         }
     }
 

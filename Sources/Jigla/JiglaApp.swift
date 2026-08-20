@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct JigglerApp: App {
+struct JiglaApp: App {
     @StateObject private var coordinator = AppCoordinator()
 
     init() {

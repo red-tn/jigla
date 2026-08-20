@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generates the placeholder Jiggler.app icon as a macOS .iconset directory.
+"""Generates the placeholder Jigla.app icon as a macOS .iconset directory.
 
 Requires Pillow (`pip install pillow`). Run from the repo root:
 

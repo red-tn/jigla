@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 
 final class IntervalRandomizerTests: XCTestCase {
     func test_randomInterval_isAlwaysWithinRangeInSeconds() {

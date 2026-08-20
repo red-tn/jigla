@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 
 final class IdleThresholdTests: XCTestCase {
     func test_wellBelowThreshold_doesNotJiggle() {

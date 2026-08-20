@@ -3,12 +3,12 @@ import Combine
 
 final class AppState: ObservableObject {
     private enum Keys {
-        static let mode = "jiggler.mode"
-        static let minInterval = "jiggler.minIntervalMinutes"
-        static let maxInterval = "jiggler.maxIntervalMinutes"
-        static let spacing = "jiggler.spacingPixels"
-        static let zenThreshold = "jiggler.zenSleepThresholdMinutes"
-        static let schedule = "jiggler.schedule"
+        static let mode = "jigla.mode"
+        static let minInterval = "jigla.minIntervalMinutes"
+        static let maxInterval = "jigla.maxIntervalMinutes"
+        static let spacing = "jigla.spacingPixels"
+        static let zenThreshold = "jigla.zenSleepThresholdMinutes"
+        static let schedule = "jigla.schedule"
     }
 
     private let defaults: UserDefaults

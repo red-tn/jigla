@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 
 final class ScheduleGateTests: XCTestCase {
     private var utcCalendar: Calendar {

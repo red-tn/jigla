@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 
 final class AppStateTests: XCTestCase {
     private var suiteName: String!
@@ -7,7 +7,7 @@ final class AppStateTests: XCTestCase {
 
     override func setUp() {
         super.setUp()
-        suiteName = "JigglerTests.\(UUID().uuidString)"
+        suiteName = "JiglaTests.\(UUID().uuidString)"
         defaults = UserDefaults(suiteName: suiteName)
     }
 

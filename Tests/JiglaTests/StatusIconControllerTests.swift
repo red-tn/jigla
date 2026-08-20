@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 
 final class StatusIconControllerTests: XCTestCase {
     func test_offMode_returnsOffSymbol() {

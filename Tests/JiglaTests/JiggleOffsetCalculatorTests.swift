@@ -1,5 +1,5 @@
 import XCTest
-@testable import Jiggler
+@testable import Jigla
 import CoreGraphics
 
 final class JiggleOffsetCalculatorTests: XCTestCase {
