@@ -42,10 +42,21 @@ in System Settings > Privacy & Security > Accessibility, then try again.
   days and an hour range (e.g. weekdays 9-17). Disabled by default, meaning
   jiggling is allowed at any time. "Jiggle Now" always ignores the schedule.
 
-## Building a signed .app (with icon)
+## Installing as a real app
 
 `swift run` is fine for development, but it doesn't produce a real icon or a
-double-clickable app. To build one:
+double-clickable app. To build and install one:
+
+    ./Scripts/build-app.sh --install
+
+This puts `Jigla.app` in `/Applications`. Launch it from there, grant it
+Accessibility permission once, and it behaves like any installed app —
+including the **Launch at login** toggle in its menu, which registers it to
+start automatically when you log in (settings and mode are restored from the
+previous session). The toggle requires the installed copy; it can't register
+a bare `swift run` binary.
+
+To build without installing:
 
     ./Scripts/build-app.sh
 

@@ -4,9 +4,18 @@
 # Must be run on macOS (uses iconutil and codesign, which don't exist
 # elsewhere). Run from the repo root:
 #
-#   ./Scripts/build-app.sh
+#   ./Scripts/build-app.sh              # build Jigla.app in the repo root
+#   ./Scripts/build-app.sh --install    # ...and copy it to /Applications
 #
 set -euo pipefail
+
+INSTALL=0
+for arg in "$@"; do
+    case "$arg" in
+        --install) INSTALL=1 ;;
+        *) echo "unknown option: $arg" >&2; exit 1 ;;
+    esac
+done
 
 BUNDLE_ID="com.jigla.app"
 APP_NAME="Jigla"
@@ -74,6 +83,15 @@ PLIST
 echo "==> Ad-hoc signing"
 codesign --deep --force --options runtime --sign - "$APP_BUNDLE"
 codesign --verify --verbose "$APP_BUNDLE"
+
+if [ "$INSTALL" = "1" ]; then
+    echo "==> Installing to /Applications"
+    rm -rf "/Applications/$APP_NAME.app"
+    ditto "$APP_BUNDLE" "/Applications/$APP_NAME.app"
+    echo "Installed /Applications/$APP_NAME.app"
+    echo "Launch it from there, grant Accessibility permission to that copy,"
+    echo "and use its 'Launch at login' toggle to start it automatically."
+fi
 
 echo "==> Done: $APP_BUNDLE"
 echo "This is ad-hoc signed (no Apple Developer ID). It will run fine on this"

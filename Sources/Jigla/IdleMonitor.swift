@@ -22,7 +22,11 @@ final class IdleMonitor {
     }
 
     private func checkIdle() {
-        let idleSeconds = CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .mouseMoved)
+        // HIDIdleTime counts ALL input (keyboard included); the old
+        // .mouseMoved-only counter made Zen jiggle mid-typing. Fall back to
+        // the mouse counter only if the IOKit read fails.
+        let idleSeconds = SystemIdleTime.seconds()
+            ?? CGEventSource.secondsSinceLastEventType(.combinedSessionState, eventType: .mouseMoved)
         let fires = JiggleDecision.shouldFireZenJiggle(
             mode: appState.mode,
             schedule: appState.schedule,

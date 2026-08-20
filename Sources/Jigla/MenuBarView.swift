@@ -3,6 +3,8 @@ import SwiftUI
 struct MenuBarView: View {
     @ObservedObject var appState: AppState
     @State private var showingPermissionAlert = false
+    @State private var launchAtLogin = false
+    @State private var launchAtLoginError: String?
 
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
@@ -67,12 +69,32 @@ struct MenuBarView: View {
 
             Divider()
 
+            Toggle("Launch at login", isOn: $launchAtLogin)
+                .onChange(of: launchAtLogin) { newValue in
+                    guard newValue != LaunchAtLogin.isEnabled else { return }
+                    do {
+                        try LaunchAtLogin.setEnabled(newValue)
+                        launchAtLoginError = nil
+                    } catch {
+                        launchAtLogin = LaunchAtLogin.isEnabled
+                        launchAtLoginError = "Needs the installed app — run Scripts/build-app.sh --install first."
+                    }
+                }
+            if let launchAtLoginError {
+                Text(launchAtLoginError)
+                    .font(.caption2)
+                    .foregroundColor(.secondary)
+            }
+
             Button("Quit Jigla") {
                 NSApplication.shared.terminate(nil)
             }
         }
         .padding()
         .frame(width: 280)
+        .onAppear {
+            launchAtLogin = LaunchAtLogin.isEnabled
+        }
         .alert("Accessibility Permission Required", isPresented: $showingPermissionAlert) {
             Button("Open System Settings") { AccessibilityPermission.openSystemSettings() }
             Button("Cancel", role: .cancel) {}
