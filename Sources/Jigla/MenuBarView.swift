@@ -72,7 +72,7 @@ struct MenuBarView: View {
             }
         }
         .padding()
-        .frame(width: 260)
+        .frame(width: 280)
         .alert("Accessibility Permission Required", isPresented: $showingPermissionAlert) {
             Button("Open System Settings") { AccessibilityPermission.openSystemSettings() }
             Button("Cancel", role: .cancel) {}

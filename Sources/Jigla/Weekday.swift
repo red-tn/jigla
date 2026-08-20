@@ -22,4 +22,28 @@ enum Weekday: Int, CaseIterable, Codable, Identifiable {
         case .saturday: return "Sat"
         }
     }
+
+    var singleLetterLabel: String {
+        switch self {
+        case .sunday: return "S"
+        case .monday: return "M"
+        case .tuesday: return "T"
+        case .wednesday: return "W"
+        case .thursday: return "T"
+        case .friday: return "F"
+        case .saturday: return "S"
+        }
+    }
+
+    var fullName: String {
+        switch self {
+        case .sunday: return "Sunday"
+        case .monday: return "Monday"
+        case .tuesday: return "Tuesday"
+        case .wednesday: return "Wednesday"
+        case .thursday: return "Thursday"
+        case .friday: return "Friday"
+        case .saturday: return "Saturday"
+        }
+    }
 }
